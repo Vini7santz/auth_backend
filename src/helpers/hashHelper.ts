@@ -1,9 +1,15 @@
-import crypto from "crypto";
+import bcrypt from "bcryptjs";
 
-export const hashPassword = (password: string): string => {
-  return crypto.createHash("sha256").update(password).digest("hex");
+export const gerarHash = async (senha: string): Promise<string> => {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(senha, salt);
+  return hash;
 };
 
-export const comparePassword = (password: string, hash: string): boolean => {
-  return hashPassword(password) === hash;
+export const verificarHash = async (
+  senha: string,
+  hash: string,
+): Promise<boolean> => {
+  const comparacao = await bcrypt.compare(senha, hash);
+  return comparacao;
 };

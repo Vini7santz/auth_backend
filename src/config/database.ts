@@ -1,11 +1,14 @@
-import { Pool } from 'pg';
+import { Pool } from "pg";
+
+const connectionString =
+  process.env.DATABASE_URL ||
+  "postgresql://livraria_auth_user:eAO9NT19UINIFqu5V1BM4WRObwYyiuYs@dpg-ct7l3ld6l47c73cr7670-a.oregon-postgres.render.com/livraria_auth";
 
 const pool = new Pool({
-  user: 'seu_usuario', // Altere para seu usuário do banco
-  host: 'localhost',    // Altere se necessário
-  database: 'seu_banco_de_dados', // Altere para o nome do seu banco
-  password: 'sua_senha', // Altere para sua senha
-  port: 5432,           // Altere se necessário
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 export default pool;
